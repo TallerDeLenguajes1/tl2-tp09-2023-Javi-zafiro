@@ -3,7 +3,7 @@ namespace repositorioParaKamba;
 
 public interface ITableroRepository
 {
-    public tablero CrearTablero();
+    public void CrearTablero(tablero tab);
     public void ModificarTablero(int idTablero, tablero tab);
     public tablero ObtenerTablero(int idTablero);
     public List<tablero> ListarTableros();

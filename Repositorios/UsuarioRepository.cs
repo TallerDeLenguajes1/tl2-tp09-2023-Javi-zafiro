@@ -1,5 +1,4 @@
 using modelosParaKamba;
-using System.Data.SqlClient;
 using System.Data.SQLite;
 
 namespace repositorioParaKamba;
@@ -32,7 +31,7 @@ public class UsuarioRepository : IUsuarioRepository
         }
     }
     public List<usuario> ListarUsuarios(){
-        var query="SELECT * FROM usuario";
+        var query="SELECT * FROM usuario;";
         List<usuario> listaDeUsuarios = new List<usuario>();
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
@@ -53,7 +52,7 @@ public class UsuarioRepository : IUsuarioRepository
     }
     public usuario ObtenerUsuario(int idUsuario){
         var usu = new usuario();
-        var query="SELECT * FROM usuario WHERE id= @idusu";
+        var query="SELECT * FROM usuario WHERE id= @idusu;";
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
             connection.Open();
@@ -71,7 +70,7 @@ public class UsuarioRepository : IUsuarioRepository
         return(usu);
     }
     public void BorrarUsuario(int idUsuario){
-        var query="DELETE FROM usuario WHERE id=@idusu";
+        var query="DELETE FROM usuario WHERE id=@idusu;";
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
             connection.Open();
