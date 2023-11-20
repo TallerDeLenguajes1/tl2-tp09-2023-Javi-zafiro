@@ -54,7 +54,60 @@ public class TableroRepository : ITableroRepository
         }
         return(tab);
     }
-    public List<tablero> ListarTableros(){}
-    public List<tablero> ListarTablerosDeUsuario(int idUsuario){}
-    public void BorrarTablero(int idTablero){}
+    public List<tablero> ListarTableros(){
+         var query="SELECT * FROM tablero;";
+        List<tablero> listaDeTableros = new List<tablero>();
+        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        {
+            connection.Open();
+            var command= new SQLiteCommand(query, connection);
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                while(reader.Read()){
+                    var tab = new tablero();
+                    tab.Id = Convert.ToInt32(reader["id"]);
+                    tab.IdUsuariPropietario=Convert.ToInt32(reader["id_usuario_asignado"]);
+                    tab.Nombre=reader["nombre"].ToString();
+                    tab.Descripcion=reader["descripcion"].ToString();
+                    listaDeTableros.Add(tab);
+                }
+            }
+            connection.Close();
+        }
+        return (listaDeTableros);
+    }
+    public List<tablero> ListarTablerosDeUsuario(int idUsuario){
+        var query="SELECT * FROM tablero WHERE id_usuario_asignado = @idusu;";
+        List<tablero> listaDeTableros = new List<tablero>();
+        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        {
+            connection.Open();
+            var command= new SQLiteCommand(query, connection);
+            command.Parameters.Add(new SQLiteParameter("@idusu", idUsuario));
+            using (SQLiteDataReader reader = command.ExecuteReader())
+            {
+                while(reader.Read()){
+                    var tab = new tablero();
+                    tab.Id = Convert.ToInt32(reader["id"]);
+                    tab.IdUsuariPropietario=Convert.ToInt32(reader["id_usuario_asignado"]);
+                    tab.Nombre=reader["nombre"].ToString();
+                    tab.Descripcion=reader["descripcion"].ToString();
+                    listaDeTableros.Add(tab);
+                }
+            }
+            connection.Close();
+        }
+        return (listaDeTableros);
+    }
+    public void BorrarTablero(int idTablero){
+        var query="DELETE FROM tablero WHERE id=@idtablero;";
+        using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+        {
+            connection.Open();
+            var command= new SQLiteCommand(query, connection);
+            command.Parameters.Add(new SQLiteParameter("@idtablero", idTablero));
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+    }
 }
