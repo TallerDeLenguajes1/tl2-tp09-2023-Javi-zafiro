@@ -33,24 +33,24 @@ public class UsuarioController : ControllerBase
         return Ok(lista);
     }
 
-    [HttpGet("usuarioGet")]
-    public ActionResult<usuario> ObtenerUsuario(int idUsuario)
+    [HttpGet("usuario{id}")]
+    public ActionResult<usuario> ObtenerUsuario(int id)
     {
         var user = new usuario();
-        user = usuarioRepository.ObtenerUsuario(idUsuario);
+        user = usuarioRepository.ObtenerUsuario(id);
         return Ok(user);
     }
 
-    [HttpPost("usuarioPost/nombre")]
-    public ActionResult<usuario> CambiarNombre(int idUsuario, usuario usu)
+    [HttpPost("usuario{id}/nombre")]
+    public ActionResult<usuario> CambiarNombre(int id, usuario usu)
     {
         if (usu==null)
         {
             return BadRequest("el objeto usuario es nulo");
         }
-        usuarioRepository.ModificarUsuario(idUsuario, usu);
+        usuarioRepository.ModificarUsuario(id, usu);
         var user = new usuario();
-        user = usuarioRepository.ObtenerUsuario(idUsuario);
+        user = usuarioRepository.ObtenerUsuario(id);
         return Ok(user);
     }
 }
