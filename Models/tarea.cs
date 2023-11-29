@@ -1,7 +1,7 @@
 namespace modelosParaKamba;
  
 
- enum EstadoTarea
+ public enum EstadoTarea
  {
     Ideas,
     ToDo,

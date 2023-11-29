@@ -41,7 +41,7 @@ public class UsuarioController : ControllerBase
         return Ok(user);
     }
 
-    [HttpPost("usuario{id}/nombre")]
+    [HttpPut("usuario{id}/nombre")]
     public ActionResult<usuario> CambiarNombre(int id, usuario usu)
     {
         if (usu==null)
